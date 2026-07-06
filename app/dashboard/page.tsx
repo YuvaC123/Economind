@@ -4,11 +4,14 @@ import { useState } from 'react'
 import { DEFAULT_PERSONA, PREDEFINED_SCENARIOS } from '@/lib/mock-data'
 import { PersonaConfigCard } from '@/components/dashboard/persona-config-card'
 import { MacroeconomicCard } from '@/components/dashboard/macroeconomic-card'
+import { EditPersonaModal } from '@/components/dashboard/edit-persona-modal'
 import { Button } from '@/components/ui/button'
 import { Play, Plus } from 'lucide-react'
 
 export default function DashboardPage() {
   const [selectedScenario, setSelectedScenario] = useState(PREDEFINED_SCENARIOS[0])
+  const [persona, setPersona] = useState(DEFAULT_PERSONA)
+  const [isEditingPersona, setIsEditingPersona] = useState(false)
 
   return (
     <div className="space-y-6">
@@ -23,7 +26,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Persona */}
         <div className="lg:col-span-1">
-          <PersonaConfigCard persona={DEFAULT_PERSONA} />
+          <PersonaConfigCard persona={persona} onEdit={() => setIsEditingPersona(true)} />
         </div>
 
         {/* Center Column - Main Content */}
@@ -92,6 +95,12 @@ export default function DashboardPage() {
           </div>
         ))}
       </div>
+
+      <EditPersonaModal
+        persona={isEditingPersona ? persona : null}
+        onClose={() => setIsEditingPersona(false)}
+        onSave={setPersona}
+      />
     </div>
   )
 }
