@@ -66,6 +66,33 @@ export default function PersonaBuilderPage() {
     setPersonas((prev) => prev.map((p) => (p.id === updated.id ? updated : p)))
   }
 
+  const handleDelete = (persona: Persona) => {
+    if (window.confirm(`Delete ${persona.name}? This can't be undone.`)) {
+      setPersonas((prev) => prev.filter((p) => p.id !== persona.id))
+    }
+  }
+
+  const handleNewPersona = () => {
+    const newPersona: Persona = {
+      id: `persona-${Date.now()}`,
+      name: 'New Persona',
+      age: 30,
+      gender: 'other',
+      education: 'bachelors',
+      income: 60000,
+      wealth: 50000,
+      savings: 10000,
+      debt: 5000,
+      monthlyExpenses: 3000,
+      riskAppetite: 'moderate',
+      spendingBehavior: 'balanced',
+      savingPreference: 'retirement',
+      investmentPreference: 'diversified',
+    }
+    setPersonas((prev) => [...prev, newPersona])
+    setEditingPersona(newPersona)
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -77,7 +104,7 @@ export default function PersonaBuilderPage() {
         {/* Personas List */}
         <div className="lg:col-span-2">
           <div className="flex gap-2 mb-4">
-            <Button className="gap-2">
+            <Button className="gap-2" onClick={handleNewPersona}>
               <Plus className="w-4 h-4" />
               New Persona
             </Button>
@@ -107,7 +134,12 @@ export default function PersonaBuilderPage() {
                     >
                       <Edit2 className="w-4 h-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" title="Delete persona">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      title="Delete persona"
+                      onClick={() => handleDelete(persona)}
+                    >
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>

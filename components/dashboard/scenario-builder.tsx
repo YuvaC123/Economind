@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Slider } from '@/components/ui/slider'
-import { TrendingUp, TrendingDown, AlertCircle } from 'lucide-react'
+import { TrendingUp, TrendingDown, AlertCircle, Check } from 'lucide-react'
 
 interface Scenario {
   id: string
@@ -59,6 +59,7 @@ export function ScenarioBuilder() {
     unemployment: selectedScenario.unemploymentRate,
     volatility: selectedScenario.marketVolatility
   })
+  const [justApplied, setJustApplied] = useState(false)
 
   const toNum = (v: number | readonly number[]) => (Array.isArray(v) ? v[0] : (v as number))
 
@@ -70,6 +71,15 @@ export function ScenarioBuilder() {
       unemployment: scenario.unemploymentRate,
       volatility: scenario.marketVolatility
     })
+  }
+
+  const handleReset = () => {
+    handleScenarioSelect(SCENARIOS[0])
+  }
+
+  const handleApply = () => {
+    setJustApplied(true)
+    setTimeout(() => setJustApplied(false), 1800)
   }
 
   const getSeverityClasses = (severity: string) => {
@@ -196,8 +206,17 @@ export function ScenarioBuilder() {
 
       {/* Action Buttons */}
       <div className="flex gap-3">
-        <Button className="flex-1">Apply Scenario</Button>
-        <Button variant="outline" className="flex-1">
+        <Button className="flex-1 gap-1.5" onClick={handleApply}>
+          {justApplied ? (
+            <>
+              <Check className="w-4 h-4" />
+              Applied
+            </>
+          ) : (
+            'Apply Scenario'
+          )}
+        </Button>
+        <Button variant="outline" className="flex-1" onClick={handleReset}>
           Reset to Defaults
         </Button>
       </div>

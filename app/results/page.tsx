@@ -1,13 +1,19 @@
 'use client'
 
+import { Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { generateMockSimulationResult, DEFAULT_PERSONA, PREDEFINED_SCENARIOS } from '@/lib/mock-data'
 import { Button } from '@/components/ui/button'
 import { Download, Share2, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
-export default function ResultsPage() {
-  const result = generateMockSimulationResult(DEFAULT_PERSONA.id, PREDEFINED_SCENARIOS[0].id)
+function ResultsContent() {
+  const searchParams = useSearchParams()
+  const personaName = searchParams.get('personaName') ?? DEFAULT_PERSONA.name
+  const scenario =
+    PREDEFINED_SCENARIOS.find((s) => s.id === searchParams.get('scenarioId')) ?? PREDEFINED_SCENARIOS[0]
+  const result = generateMockSimulationResult(DEFAULT_PERSONA.id, scenario.id)
 
   return (
     <div className="min-h-screen bg-background text-foreground py-12">
@@ -22,7 +28,7 @@ export default function ResultsPage() {
 
         <h1 className="text-3xl font-semibold mb-1">Simulation Results</h1>
         <p className="text-muted-foreground">
-          Economic behavior analysis for {DEFAULT_PERSONA.name} under {PREDEFINED_SCENARIOS[0].name}
+          Economic behavior analysis for {personaName} under {scenario.name}
         </p>
       </div>
 
@@ -35,7 +41,7 @@ export default function ResultsPage() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground leading-relaxed">
-              {DEFAULT_PERSONA.name} demonstrates a moderate risk tolerance with balanced spending and
+              {personaName} demonstrates a moderate risk tolerance with balanced spending and
               saving behaviors. Under current economic conditions, the consumer shows preference for
               diversified investments while maintaining adequate emergency savings. Behavioral
               patterns indicate strong future orientation with some sensitivity to market confidence
@@ -163,5 +169,13 @@ export default function ResultsPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ResultsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" />}>
+      <ResultsContent />
+    </Suspense>
   )
 }

@@ -48,7 +48,7 @@ export function PersonaConfigCard({ persona, onEdit }: PersonaConfigCardProps) {
             {stats.map((stat, i) => {
               const Icon = stat.icon
               return (
-                <div key={i} className="rounded-lg border border-border p-3 flex items-center gap-3 transition-colors duration-150 hover:border-primary/30 hover:bg-primary/5">
+                <div key={i} className="rounded-lg border border-border p-3 flex items-center gap-3">
                   <Icon className="w-4 h-4 text-primary flex-shrink-0" />
                   <div className="min-w-0">
                     <p className="text-xs text-muted-foreground">{stat.label}</p>

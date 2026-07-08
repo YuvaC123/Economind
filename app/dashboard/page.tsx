@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { DEFAULT_PERSONA, PREDEFINED_SCENARIOS } from '@/lib/mock-data'
 import { PersonaConfigCard } from '@/components/dashboard/persona-config-card'
 import { MacroeconomicCard } from '@/components/dashboard/macroeconomic-card'
@@ -9,9 +10,16 @@ import { Button } from '@/components/ui/button'
 import { Play, Plus } from 'lucide-react'
 
 export default function DashboardPage() {
+  const router = useRouter()
   const [selectedScenario, setSelectedScenario] = useState(PREDEFINED_SCENARIOS[0])
   const [persona, setPersona] = useState(DEFAULT_PERSONA)
   const [isEditingPersona, setIsEditingPersona] = useState(false)
+
+  const handleRunSimulation = () => {
+    router.push(
+      `/results?personaName=${encodeURIComponent(persona.name)}&scenarioId=${selectedScenario.id}`
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -50,7 +58,7 @@ export default function DashboardPage() {
               ))}
             </div>
 
-            <Button className="w-full mt-4 gap-2">
+            <Button className="w-full mt-4 gap-2" onClick={handleRunSimulation}>
               <Play className="w-4 h-4" />
               Run Simulation
             </Button>
@@ -62,13 +70,25 @@ export default function DashboardPage() {
               Quick Actions
             </h3>
             <div className="space-y-2">
-              <Button variant="outline" className="w-full justify-start">
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => router.push('/dashboard/persona-builder')}
+              >
                 Create New Persona
               </Button>
-              <Button variant="outline" className="w-full justify-start">
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => router.push('/dashboard/economic-scenarios')}
+              >
                 Custom Scenario
               </Button>
-              <Button variant="outline" className="w-full justify-start">
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => router.push('/dashboard/reports')}
+              >
                 View Recent Reports
               </Button>
             </div>

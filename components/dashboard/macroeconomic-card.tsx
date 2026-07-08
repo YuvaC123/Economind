@@ -66,15 +66,15 @@ export function MacroeconomicCard({ macro, onChange, readOnly = false }: Macroec
 
         {/* Summary Stats */}
         <div className="mt-6 pt-6 border-t border-border grid grid-cols-3 gap-3">
-          <div className="rounded-lg border border-border p-3 text-center transition-colors duration-150 hover:border-primary/30 hover:bg-primary/5">
+          <div className="rounded-lg border border-border p-3 text-center">
             <p className="text-xs text-muted-foreground mb-1">Avg. Inflation</p>
             <p className="text-lg font-semibold text-primary">{macro.inflation.toFixed(1)}%</p>
           </div>
-          <div className="rounded-lg border border-border p-3 text-center transition-colors duration-150 hover:border-primary/30 hover:bg-primary/5">
+          <div className="rounded-lg border border-border p-3 text-center">
             <p className="text-xs text-muted-foreground mb-1">GDP Growth</p>
             <p className="text-lg font-semibold text-primary">{macro.gdpGrowth.toFixed(1)}%</p>
           </div>
-          <div className="rounded-lg border border-border p-3 text-center transition-colors duration-150 hover:border-primary/30 hover:bg-primary/5">
+          <div className="rounded-lg border border-border p-3 text-center">
             <p className="text-xs text-muted-foreground mb-1">Confidence</p>
             <p className="text-lg font-semibold text-primary">{macro.marketConfidence.toFixed(0)}</p>
           </div>

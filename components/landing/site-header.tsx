@@ -28,8 +28,16 @@ export function SiteHeader() {
 
           <SettingsMenu />
 
-          <Link href="/dashboard">
-            <Button size="sm">Dashboard</Button>
+          <div className="w-px h-6 bg-border hidden sm:block" />
+
+          <Link href="/login">
+            <Button variant="outline" size="sm">
+              Log in
+            </Button>
+          </Link>
+
+          <Link href="/signup">
+            <Button size="sm">Sign up</Button>
           </Link>
         </div>
       </div>

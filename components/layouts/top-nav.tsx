@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { Play } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { TutorialButton } from '@/components/dashboard/tutorial-modal'
@@ -7,14 +8,12 @@ import { NotificationsButton } from '@/components/layouts/notifications-button'
 import { ExportButton } from '@/components/layouts/export-button'
 import { SettingsMenu } from '@/components/layouts/settings-menu'
 
-interface TopNavProps {
-  onRunSimulation?: () => void
-}
+export function TopNav() {
+  const router = useRouter()
 
-export function TopNav({ onRunSimulation }: TopNavProps) {
   return (
     <header
-      className="fixed top-0 right-0 left-0 z-30 border-b border-border bg-white h-16"
+      className="fixed top-0 right-0 left-0 z-40 border-b border-border bg-white h-16"
       style={{ left: 'var(--sidebar-width, 280px)' }}
     >
       <div className="h-full px-6 flex items-center justify-between">
@@ -37,7 +36,7 @@ export function TopNav({ onRunSimulation }: TopNavProps) {
 
           <div className="w-px h-6 bg-border hidden sm:block" />
 
-          <Button onClick={onRunSimulation} className="gap-2 hidden sm:flex" size="sm">
+          <Button onClick={() => router.push('/results')} className="gap-2 hidden sm:flex" size="sm">
             <Play className="w-4 h-4" />
             Run Simulation
           </Button>
