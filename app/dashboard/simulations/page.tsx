@@ -2,13 +2,15 @@
 
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { PageTransition } from '@/components/shared/page-transition'
+import { CountUpNumber } from '@/components/shared/count-up-number'
 import { Play, Download, Eye } from 'lucide-react'
 import { generateMockSimulationResult, DEFAULT_PERSONA } from '@/lib/mock-data'
 
 const SIMULATIONS = [
   {
     id: 1,
-    persona: 'Sarah Chen',
+    persona: 'John Doe',
     scenario: 'Low Inflation Economy',
     scenarioId: 'scenario-1',
     date: '2 hours ago',
@@ -38,6 +40,12 @@ const SIMULATIONS = [
 export default function SimulationsPage() {
   const router = useRouter()
 
+  const avgAccuracy = Math.round(
+    SIMULATIONS.reduce((sum, s) => sum + s.accuracy, 0) / SIMULATIONS.length
+  )
+  const completedCount = SIMULATIONS.filter((s) => s.status === 'Completed').length
+  const bestAccuracy = Math.max(...SIMULATIONS.map((s) => s.accuracy))
+
   const handleView = (sim: (typeof SIMULATIONS)[number]) => {
     router.push(`/results?personaName=${encodeURIComponent(sim.persona)}&scenarioId=${sim.scenarioId}`)
   }
@@ -63,9 +71,10 @@ export default function SimulationsPage() {
   }
 
   return (
+    <PageTransition>
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold mb-1">Simulations</h2>
+        <h2 className="font-heading text-3xl font-medium mb-1">Simulations</h2>
         <p className="text-muted-foreground">View and manage your economic behavior simulations</p>
       </div>
 
@@ -74,6 +83,33 @@ export default function SimulationsPage() {
           <Play className="w-4 h-4" />
           New Simulation
         </Button>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="card-glass text-center">
+          <p className="text-2xl font-mono font-semibold text-primary">
+            <CountUpNumber target={SIMULATIONS.length} />
+          </p>
+          <p className="text-xs text-muted-foreground mt-2">Total Simulations</p>
+        </div>
+        <div className="card-glass text-center">
+          <p className="text-2xl font-mono font-semibold text-primary">
+            <CountUpNumber target={completedCount} />
+          </p>
+          <p className="text-xs text-muted-foreground mt-2">Completed</p>
+        </div>
+        <div className="card-glass text-center">
+          <p className="text-2xl font-mono font-semibold text-primary">
+            <CountUpNumber target={avgAccuracy} format={(n) => `${Math.round(n)}%`} />
+          </p>
+          <p className="text-xs text-muted-foreground mt-2">Avg. Accuracy</p>
+        </div>
+        <div className="card-glass text-center">
+          <p className="text-2xl font-mono font-semibold text-primary">
+            <CountUpNumber target={bestAccuracy} format={(n) => `${Math.round(n)}%`} />
+          </p>
+          <p className="text-xs text-muted-foreground mt-2">Best Result</p>
+        </div>
       </div>
 
       <div className="space-y-3">
@@ -89,7 +125,7 @@ export default function SimulationsPage() {
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500" />
                   {sim.status}
                 </span>
-                <span className="font-medium text-primary">{sim.accuracy}% accuracy</span>
+                <span className="font-mono font-medium text-primary">{sim.accuracy}% accuracy</span>
               </div>
             </div>
 
@@ -110,5 +146,6 @@ export default function SimulationsPage() {
         ))}
       </div>
     </div>
+    </PageTransition>
   )
 }

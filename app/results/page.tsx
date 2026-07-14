@@ -1,12 +1,13 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { generateMockSimulationResult, DEFAULT_PERSONA, PREDEFINED_SCENARIOS } from '@/lib/mock-data'
 import { Button } from '@/components/ui/button'
-import { Download, Share2, ArrowLeft } from 'lucide-react'
+import { Download, Share2, ArrowLeft, Check } from 'lucide-react'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { PageTransition } from '@/components/shared/page-transition'
 
 function ResultsContent() {
   const searchParams = useSearchParams()
@@ -14,8 +15,36 @@ function ResultsContent() {
   const scenario =
     PREDEFINED_SCENARIOS.find((s) => s.id === searchParams.get('scenarioId')) ?? PREDEFINED_SCENARIOS[0]
   const result = generateMockSimulationResult(DEFAULT_PERSONA.id, scenario.id)
+  const [copied, setCopied] = useState(false)
+  const [exported, setExported] = useState(false)
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+    } catch {
+      // clipboard access denied — the URL itself is still shareable manually
+    }
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1800)
+  }
+
+  const handleExport = () => {
+    const payload = { personaName, scenario: scenario.name, result }
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `results-${personaName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.json`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+    setExported(true)
+    setTimeout(() => setExported(false), 1800)
+  }
 
   return (
+    <PageTransition>
     <div className="min-h-screen bg-background text-foreground py-12">
       {/* Header */}
       <div className="max-w-6xl mx-auto px-6 mb-8">
@@ -26,7 +55,7 @@ function ResultsContent() {
           </Button>
         </Link>
 
-        <h1 className="text-3xl font-semibold mb-1">Simulation Results</h1>
+        <h1 className="font-heading text-4xl font-medium mb-1">Simulation Results</h1>
         <p className="text-muted-foreground">
           Economic behavior analysis for {personaName} under {scenario.name}
         </p>
@@ -77,8 +106,8 @@ function ResultsContent() {
           ].map((item, i) => (
             <div key={i} className="card-glass">
               <p className="text-sm text-muted-foreground">{item.label}</p>
-              <p className="text-2xl font-semibold text-primary mt-2">{item.value}</p>
-              <p className="text-xs text-muted-foreground mt-2">Confidence: {item.confidence}</p>
+              <p className="text-2xl font-mono font-semibold text-primary mt-2">{item.value}</p>
+              <p className="text-xs text-muted-foreground mt-2 font-mono">Confidence: {item.confidence}</p>
             </div>
           ))}
         </div>
@@ -120,7 +149,7 @@ function ResultsContent() {
                       <span className="text-sm font-medium capitalize">
                         {key.replace(/([A-Z])/g, ' $1').trim()}
                       </span>
-                      <span className="text-sm font-semibold">{(value * 100).toFixed(0)}%</span>
+                      <span className="text-sm font-mono font-semibold">{(value * 100).toFixed(0)}%</span>
                     </div>
                     <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                       <div className="h-full bg-primary transition-all duration-500" style={{ width: `${value * 100}%` }} />
@@ -144,7 +173,7 @@ function ResultsContent() {
                       <span className="text-sm font-medium capitalize">
                         {key.replace(/([A-Z])/g, ' $1').trim()}
                       </span>
-                      <span className="text-sm font-semibold">{(value * 100).toFixed(0)}%</span>
+                      <span className="text-sm font-mono font-semibold">{(value * 100).toFixed(0)}%</span>
                     </div>
                     <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                       <div className="h-full bg-primary transition-all duration-500" style={{ width: `${value * 100}%` }} />
@@ -158,17 +187,18 @@ function ResultsContent() {
 
         {/* Export Section */}
         <div className="flex gap-3 justify-end">
-          <Button variant="outline" className="gap-2">
-            <Share2 className="w-4 h-4" />
-            Share Results
+          <Button variant="outline" className="gap-2" onClick={handleShare}>
+            {copied ? <Check className="w-4 h-4" /> : <Share2 className="w-4 h-4" />}
+            {copied ? 'Link copied' : 'Share Results'}
           </Button>
-          <Button className="gap-2">
-            <Download className="w-4 h-4" />
-            Export Report
+          <Button className="gap-2" onClick={handleExport}>
+            {exported ? <Check className="w-4 h-4" /> : <Download className="w-4 h-4" />}
+            {exported ? 'Exported' : 'Export Report'}
           </Button>
         </div>
       </div>
     </div>
+    </PageTransition>
   )
 }
 

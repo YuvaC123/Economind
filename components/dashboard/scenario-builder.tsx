@@ -85,11 +85,11 @@ export function ScenarioBuilder() {
   const getSeverityClasses = (severity: string) => {
     switch (severity) {
       case 'mild':
-        return 'bg-green-50 text-green-700 border-green-200'
+        return 'bg-green-500/15 text-green-400 border-green-500/30'
       case 'moderate':
-        return 'bg-amber-50 text-amber-700 border-amber-200'
+        return 'bg-amber-500/15 text-amber-400 border-amber-500/30'
       case 'severe':
-        return 'bg-red-50 text-red-700 border-red-200'
+        return 'bg-red-500/15 text-red-400 border-red-500/30'
       default:
         return 'bg-muted text-muted-foreground'
     }
@@ -105,7 +105,7 @@ export function ScenarioBuilder() {
             <button
               key={scenario.id}
               onClick={() => handleScenarioSelect(scenario)}
-              className={`p-3 rounded-lg border cursor-pointer text-left transition-all duration-150 active:scale-[0.98] ${
+              className={`p-3 rounded-lg border cursor-pointer text-left transition-all duration-150 active:scale-[0.98] hover-glow ${
                 selectedScenario.id === scenario.id
                   ? 'border-primary bg-primary/5 shadow-sm'
                   : 'border-border hover:border-primary/30 hover:bg-primary/5'
@@ -137,7 +137,7 @@ export function ScenarioBuilder() {
                 <TrendingUp className="w-4 h-4 text-muted-foreground" />
                 Inflation Rate
               </label>
-              <span className="text-sm font-semibold">{customValues.inflation.toFixed(1)}%</span>
+              <span className="text-sm font-mono font-semibold">{customValues.inflation.toFixed(1)}%</span>
             </div>
             <Slider
               value={[customValues.inflation]}
@@ -155,7 +155,7 @@ export function ScenarioBuilder() {
                 <TrendingUp className="w-4 h-4 text-muted-foreground" />
                 Interest Rate
               </label>
-              <span className="text-sm font-semibold">{customValues.interest.toFixed(1)}%</span>
+              <span className="text-sm font-mono font-semibold">{customValues.interest.toFixed(1)}%</span>
             </div>
             <Slider
               value={[customValues.interest]}
@@ -173,7 +173,7 @@ export function ScenarioBuilder() {
                 <TrendingDown className="w-4 h-4 text-muted-foreground" />
                 Unemployment Rate
               </label>
-              <span className="text-sm font-semibold">{customValues.unemployment.toFixed(1)}%</span>
+              <span className="text-sm font-mono font-semibold">{customValues.unemployment.toFixed(1)}%</span>
             </div>
             <Slider
               value={[customValues.unemployment]}
@@ -191,7 +191,7 @@ export function ScenarioBuilder() {
                 <AlertCircle className="w-4 h-4 text-muted-foreground" />
                 Market Volatility
               </label>
-              <span className="text-sm font-semibold">{customValues.volatility.toFixed(0)}</span>
+              <span className="text-sm font-mono font-semibold">{customValues.volatility.toFixed(0)}</span>
             </div>
             <Slider
               value={[customValues.volatility]}

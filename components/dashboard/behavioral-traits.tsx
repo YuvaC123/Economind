@@ -57,7 +57,7 @@ export function BehavioralTraits() {
                 <p className="text-sm font-medium">{trait.name}</p>
                 <p className="text-xs text-muted-foreground">{trait.description}</p>
               </div>
-              <Badge variant="outline">{trait.value}%</Badge>
+              <Badge variant="outline" className="font-mono">{trait.value}%</Badge>
             </div>
 
             {/* Progress bar */}

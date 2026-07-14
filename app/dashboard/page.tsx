@@ -6,6 +6,8 @@ import { DEFAULT_PERSONA, PREDEFINED_SCENARIOS } from '@/lib/mock-data'
 import { PersonaConfigCard } from '@/components/dashboard/persona-config-card'
 import { MacroeconomicCard } from '@/components/dashboard/macroeconomic-card'
 import { EditPersonaModal } from '@/components/dashboard/edit-persona-modal'
+import { PageTransition } from '@/components/shared/page-transition'
+import { CountUpNumber } from '@/components/shared/count-up-number'
 import { Button } from '@/components/ui/button'
 import { Play, Plus } from 'lucide-react'
 
@@ -22,16 +24,17 @@ export default function DashboardPage() {
   }
 
   return (
+    <PageTransition>
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-semibold mb-1">Welcome back</h2>
+        <h2 className="font-heading text-3xl font-medium mb-1">Welcome back</h2>
         <p className="text-muted-foreground">
           Configure your persona and select a scenario to run simulations
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column - Persona */}
         <div className="lg:col-span-1">
           <PersonaConfigCard persona={persona} onEdit={() => setIsEditingPersona(true)} />
@@ -46,7 +49,7 @@ export default function DashboardPage() {
                 <button
                   key={scenario.id}
                   onClick={() => setSelectedScenario(scenario)}
-                  className={`w-full text-left p-3 rounded-lg border cursor-pointer transition-all duration-150 active:scale-[0.98] ${
+                  className={`w-full text-left p-3 rounded-lg border cursor-pointer transition-all duration-150 active:scale-[0.98] hover-glow ${
                     selectedScenario.id === scenario.id
                       ? 'border-primary bg-primary/5 shadow-sm'
                       : 'border-border hover:border-primary/30 hover:bg-primary/5'
@@ -104,13 +107,15 @@ export default function DashboardPage() {
       {/* Statistics Section */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: 'Personas Created', value: '12' },
-          { label: 'Simulations Run', value: '48' },
-          { label: 'Avg. Accuracy', value: '87%' },
-          { label: 'Reports Generated', value: '5' },
+          { label: 'Personas Created', value: 12, suffix: '' },
+          { label: 'Simulations Run', value: 48, suffix: '' },
+          { label: 'Avg. Accuracy', value: 87, suffix: '%' },
+          { label: 'Reports Generated', value: 5, suffix: '' },
         ].map((stat, i) => (
           <div key={i} className="card-glass text-center">
-            <p className="text-2xl font-semibold text-primary">{stat.value}</p>
+            <p className="text-2xl font-mono font-semibold text-primary">
+              <CountUpNumber target={stat.value} format={(n) => `${Math.round(n)}${stat.suffix}`} />
+            </p>
             <p className="text-xs text-muted-foreground mt-2">{stat.label}</p>
           </div>
         ))}
@@ -122,5 +127,6 @@ export default function DashboardPage() {
         onSave={setPersona}
       />
     </div>
+    </PageTransition>
   )
 }

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { Slider } from '@/components/ui/slider'
+import { AnimatedNumber } from '@/components/shared/animated-number'
 
 const MONTHLY_INCOME = 5200
 
@@ -36,7 +37,7 @@ export function ScenarioDemo() {
   return (
     <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
       <div className="flex items-center justify-between mb-1">
-        <p className="text-sm font-medium">Sarah Chen, age 35</p>
+        <p className="text-sm font-medium">John Doe, age 35</p>
         <span className="text-xs font-mono text-muted-foreground">${MONTHLY_INCOME.toLocaleString()}/mo</span>
       </div>
       <p className="text-xs text-muted-foreground mb-6">Moderate risk appetite &middot; diversified investor</p>
@@ -44,7 +45,9 @@ export function ScenarioDemo() {
       <div className="mb-7">
         <div className="flex items-center justify-between mb-2">
           <label className="text-sm font-medium">Inflation</label>
-          <span className="text-sm font-mono font-semibold text-primary">{rate.toFixed(1)}%</span>
+          <span className="text-sm font-mono font-semibold text-primary">
+            <AnimatedNumber value={rate} format={(n) => `${n.toFixed(1)}%`} />
+          </span>
         </div>
         <Slider
           value={inflation}
@@ -53,7 +56,7 @@ export function ScenarioDemo() {
           max={10}
           step={0.1}
         />
-        <p className="text-xs text-muted-foreground mt-2">Drag to see how her monthly decisions shift</p>
+        <p className="text-xs text-muted-foreground mt-2">Drag to see how their monthly decisions shift</p>
       </div>
 
       <div className="space-y-3">
@@ -62,7 +65,7 @@ export function ScenarioDemo() {
             <div className="flex items-center justify-between mb-1.5">
               <span className="text-sm text-muted-foreground">{row.label}</span>
               <span className="text-sm font-mono font-medium">
-                ${Math.round(row.value).toLocaleString()}
+                <AnimatedNumber value={row.value} format={(n) => `$${Math.round(n).toLocaleString()}`} />
               </span>
             </div>
             <div className="h-1.5 rounded-full bg-muted overflow-hidden">

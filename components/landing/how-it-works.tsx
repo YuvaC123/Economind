@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { UserPlus, SlidersHorizontal, PlayCircle } from 'lucide-react'
 
 const steps = [
@@ -24,24 +25,43 @@ export function HowItWorks() {
   return (
     <section className="py-20 px-6 border-t border-border">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-14">
+        <motion.div
+          className="text-center mb-14"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: '-80px' }}
+          transition={{ duration: 0.4 }}
+        >
           <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">How it works</p>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+          <h2 className="font-heading text-3xl md:text-4xl font-medium tracking-tight">
             From persona to insight in three steps
           </h2>
-        </div>
+        </motion.div>
 
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-10">
-          <div className="hidden md:block absolute top-6 left-[16.5%] right-[16.5%] h-px bg-border" />
+          <motion.div
+            className="hidden md:block absolute top-6 left-[16.5%] right-[16.5%] h-px bg-border origin-left"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: false, margin: '-80px' }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          />
           {steps.map((step, i) => (
-            <div key={step.title} className="relative flex flex-col items-center text-center">
+            <motion.div
+              key={step.title}
+              className="relative flex flex-col items-center text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: '-60px' }}
+              transition={{ duration: 0.4, delay: i * 0.15 }}
+            >
               <div className="relative z-10 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold mb-4">
                 {i + 1}
               </div>
               <step.icon className="w-5 h-5 text-primary mb-3" />
               <h3 className="font-medium mb-2">{step.title}</h3>
               <p className="text-sm text-muted-foreground max-w-xs">{step.desc}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

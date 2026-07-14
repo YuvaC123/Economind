@@ -12,7 +12,7 @@ export function RightPanel({ isOpen = true }: RightPanelProps) {
   if (!isOpen) return null
 
   return (
-    <aside className="fixed right-0 top-16 bottom-0 z-30 border-l border-border bg-white flex flex-col w-80">
+    <aside className="fixed right-0 top-16 bottom-0 z-30 border-l border-border bg-card flex flex-col w-80">
       <Tabs defaultValue="insights" className="flex flex-col h-full">
         <TabsList className="m-4 mb-2 grid w-auto grid-cols-3">
           <TabsTrigger value="insights" className="text-xs">
@@ -28,7 +28,7 @@ export function RightPanel({ isOpen = true }: RightPanelProps) {
 
         <ScrollArea className="flex-1">
           <div className="px-4 pb-4">
-            <TabsContent value="insights" className="space-y-3 mt-0">
+            <TabsContent value="insights" className="divide-y divide-border mt-0">
               <InsightItem
                 icon={TrendingUp}
                 title="Consumer Confidence"
@@ -49,7 +49,7 @@ export function RightPanel({ isOpen = true }: RightPanelProps) {
               />
             </TabsContent>
 
-            <TabsContent value="theory" className="space-y-3 mt-0">
+            <TabsContent value="theory" className="divide-y divide-border mt-0">
               <TheoryCard
                 theory="Rational Choice"
                 alignment="71%"
@@ -67,7 +67,7 @@ export function RightPanel({ isOpen = true }: RightPanelProps) {
               />
             </TabsContent>
 
-            <TabsContent value="analysis" className="space-y-3 mt-0">
+            <TabsContent value="analysis" className="divide-y divide-border mt-0">
               <AnalysisItem
                 label="Spending Velocity"
                 value="High"
@@ -103,7 +103,7 @@ function InsightItem({
   change: string
 }) {
   return (
-    <div className="rounded-lg border border-border p-3">
+    <div className="py-3 first:pt-0 last:pb-0">
       <div className="flex items-start gap-3">
         <Icon className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" />
         <div className="min-w-0">
@@ -126,7 +126,7 @@ function TheoryCard({
   description: string
 }) {
   return (
-    <div className="rounded-lg border border-border p-3">
+    <div className="py-3 first:pt-0 last:pb-0">
       <div className="flex items-start justify-between">
         <div className="min-w-0">
           <p className="text-xs font-medium">{theory}</p>
@@ -148,7 +148,7 @@ function AnalysisItem({
   description: string
 }) {
   return (
-    <div className="rounded-lg border border-border p-3">
+    <div className="py-3 first:pt-0 last:pb-0">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="text-xs font-medium text-muted-foreground">{label}</p>

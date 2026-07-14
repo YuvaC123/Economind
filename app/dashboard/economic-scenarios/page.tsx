@@ -1,16 +1,21 @@
 'use client'
 
-import { PREDEFINED_SCENARIOS } from '@/lib/mock-data'
+import { useRouter } from 'next/navigation'
+import { DEFAULT_PERSONA, PREDEFINED_SCENARIOS } from '@/lib/mock-data'
 import { ScenarioBuilder } from '@/components/dashboard/scenario-builder'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { PageTransition } from '@/components/shared/page-transition'
 import { Play } from 'lucide-react'
 
 export default function ScenariosPage() {
+  const router = useRouter()
+
   return (
+    <PageTransition>
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold mb-1">Economic Scenarios</h2>
+        <h2 className="font-heading text-3xl font-medium mb-1">Economic Scenarios</h2>
         <p className="text-muted-foreground">
           Predefined and custom economic scenarios for testing consumer behavior
         </p>
@@ -37,24 +42,32 @@ export default function ScenariosPage() {
                 <div className="grid grid-cols-2 gap-2">
                   <div className="rounded-lg border border-border p-2">
                     <p className="text-xs text-muted-foreground">Inflation</p>
-                    <p className="font-semibold text-sm">{scenario.macro.inflation.toFixed(1)}%</p>
+                    <p className="font-mono font-semibold text-sm">{scenario.macro.inflation.toFixed(1)}%</p>
                   </div>
                   <div className="rounded-lg border border-border p-2">
                     <p className="text-xs text-muted-foreground">GDP Growth</p>
-                    <p className="font-semibold text-sm">{scenario.macro.gdpGrowth.toFixed(1)}%</p>
+                    <p className="font-mono font-semibold text-sm">{scenario.macro.gdpGrowth.toFixed(1)}%</p>
                   </div>
                   <div className="rounded-lg border border-border p-2">
                     <p className="text-xs text-muted-foreground">Unemployment</p>
-                    <p className="font-semibold text-sm">{scenario.macro.unemployment.toFixed(1)}%</p>
+                    <p className="font-mono font-semibold text-sm">{scenario.macro.unemployment.toFixed(1)}%</p>
                   </div>
                   <div className="rounded-lg border border-border p-2">
                     <p className="text-xs text-muted-foreground">Market Conf.</p>
-                    <p className="font-semibold text-sm">{scenario.macro.marketConfidence.toFixed(0)}</p>
+                    <p className="font-mono font-semibold text-sm">{scenario.macro.marketConfidence.toFixed(0)}</p>
                   </div>
                 </div>
               </div>
 
-              <Button className="w-full gap-2" size="sm">
+              <Button
+                className="w-full gap-2"
+                size="sm"
+                onClick={() =>
+                  router.push(
+                    `/results?personaName=${encodeURIComponent(DEFAULT_PERSONA.name)}&scenarioId=${scenario.id}`
+                  )
+                }
+              >
                 <Play className="w-4 h-4" />
                 Use Scenario
               </Button>
@@ -63,5 +76,6 @@ export default function ScenariosPage() {
         ))}
       </div>
     </div>
+    </PageTransition>
   )
 }

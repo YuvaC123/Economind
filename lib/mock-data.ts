@@ -69,9 +69,9 @@ export interface SimulationResult {
 
 export const DEFAULT_PERSONA: Persona = {
   id: 'persona-1',
-  name: 'Sarah Chen',
+  name: 'John Doe',
   age: 35,
-  gender: 'female',
+  gender: 'male',
   education: 'masters',
   income: 85000,
   wealth: 250000,

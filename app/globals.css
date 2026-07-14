@@ -6,7 +6,7 @@
 
 @theme inline {
   --font-heading: var(--font-fraunces), 'Fraunces Fallback', serif;
-  --font-sans: var(--font-geist-sans), 'Geist Fallback';
+  --font-sans: var(--font-ibm-plex-sans), 'IBM Plex Sans Fallback';
   --font-mono: var(--font-geist-mono), 'Geist Mono Fallback';
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -86,37 +86,37 @@
 
 .dark {
   color-scheme: dark;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
+  --background: oklch(0.135 0.004 260);
+  --foreground: oklch(0.96 0.002 260);
+  --card: oklch(0.185 0.005 260);
+  --card-foreground: oklch(0.96 0.002 260);
+  --popover: oklch(0.19 0.005 260);
+  --popover-foreground: oklch(0.96 0.002 260);
+  --primary: oklch(0.68 0.19 262.881);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.23 0.006 260);
+  --secondary-foreground: oklch(0.96 0.002 260);
+  --muted: oklch(0.22 0.006 260);
+  --muted-foreground: oklch(0.64 0.012 260);
+  --accent: oklch(0.27 0.045 262.881);
+  --accent-foreground: oklch(0.82 0.07 262.881);
+  --destructive: oklch(0.7 0.19 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.68 0.19 262.881);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar: oklch(0.16 0.005 260);
+  --sidebar-foreground: oklch(0.96 0.002 260);
+  --sidebar-primary: oklch(0.68 0.19 262.881);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.23 0.006 260);
+  --sidebar-accent-foreground: oklch(0.96 0.002 260);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.68 0.19 262.881);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -165,28 +165,60 @@
   }
   html {
     @apply font-sans scroll-smooth;
+    font-size: 17.5px;
   }
 }
 
 @layer components {
   /* Flat, neutral surface styles (replaces the former glassmorphism look) */
   .glass {
-    @apply bg-white border border-border;
+    @apply bg-card border border-border;
   }
 
   .glass-dark {
-    @apply bg-white border border-border;
+    @apply bg-card border border-border;
   }
 
   .gradient-primary {
     @apply bg-primary;
   }
 
+  /* Default: no hover affordance. Most card-glass usages are pure display
+     (stat tiles, descriptions, chart wrappers) with no click behavior of
+     their own, so they shouldn't look clickable. */
   .card-glass {
-    @apply rounded-xl p-6 bg-card border border-border shadow-sm transition-all duration-200 hover:shadow-md hover:border-border/80 hover:-translate-y-0.5;
+    @apply rounded-xl p-6 bg-card border border-border shadow-sm;
+  }
+
+  /* Opt-in glow, for the few cards where the whole card really is the
+     interactive surface (e.g. a draggable row) - not the default. */
+  .card-interactive {
+    @apply rounded-xl p-6 bg-card border border-border shadow-sm transition-all duration-200 hover:shadow-[0_0_0_1px_var(--color-primary),0_8px_24px_-8px_var(--color-primary)] hover:border-primary/40 hover:-translate-y-0.5;
   }
 
   .text-balance-wrap {
     @apply text-balance;
   }
+
+  /* Slowly drifting dot grid - ambient motion behind hero content, animejs-style */
+  .dot-grid {
+    background-image: radial-gradient(circle, var(--color-border) 1px, transparent 1px);
+    background-size: 28px 28px;
+    animation: dot-drift 60s linear infinite;
+  }
+
+  /* Glow ring that only appears on hover - the persona-row treatment, made reusable */
+  .hover-glow {
+    @apply transition-all duration-200 hover:shadow-[0_0_0_1px_var(--color-primary),0_8px_24px_-8px_var(--color-primary)] hover:border-primary/40 hover:-translate-y-0.5;
+  }
 }
+
+@keyframes dot-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 280px 280px;
+  }
+}
+

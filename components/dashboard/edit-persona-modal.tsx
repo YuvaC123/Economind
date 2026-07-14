@@ -12,7 +12,7 @@ interface EditPersonaModalProps {
 }
 
 const fieldClass =
-  'mt-1 w-full px-3 py-2 border border-border rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/30'
+  'mt-1 w-full px-3 py-2 border border-border rounded-lg text-sm bg-card focus:outline-none focus:ring-2 focus:ring-primary/30'
 
 export function EditPersonaModal({ persona, onClose, onSave }: EditPersonaModalProps) {
   const [form, setForm] = useState<Persona | null>(persona)
@@ -49,10 +49,10 @@ export function EditPersonaModal({ persona, onClose, onSave }: EditPersonaModalP
         onClick={onClose}
       />
 
-      <div className="relative bg-white rounded-xl border border-border shadow-lg w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-card rounded-xl border border-border shadow-lg w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground cursor-pointer transition-colors"
+          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground cursor-pointer transition-colors hover-glow"
           aria-label="Close"
         >
           <X className="w-4 h-4" />

@@ -33,7 +33,7 @@ export function Sidebar({ isOpen = true, onToggle }: SidebarProps) {
 
   return (
     <aside
-      className="fixed left-0 top-0 z-40 h-screen flex flex-col border-r border-border bg-white transition-[width] duration-200"
+      className="fixed left-0 top-0 z-40 h-screen flex flex-col border-r border-border bg-card transition-[width] duration-200"
       style={{ width: isOpen ? 280 : 80 }}
     >
       {/* Logo Section */}
@@ -42,7 +42,9 @@ export function Sidebar({ isOpen = true, onToggle }: SidebarProps) {
         className="h-16 flex items-center gap-3 px-4 border-b border-border cursor-pointer hover:bg-muted transition-colors duration-150"
       >
         <Brain className="w-5 h-5 flex-shrink-0 text-primary" />
-        {isOpen && <span className="font-semibold text-sm whitespace-nowrap">EconoMind</span>}
+        {isOpen && (
+          <span className="font-heading font-medium text-base whitespace-nowrap">EconoMind</span>
+        )}
       </Link>
 
       {/* Navigation Items */}
@@ -74,7 +76,7 @@ export function Sidebar({ isOpen = true, onToggle }: SidebarProps) {
       {/* Toggle Button */}
       <button
         onClick={() => onToggle?.(!isOpen)}
-        className="absolute -right-3 bottom-20 rounded-full border border-border bg-white p-1.5 cursor-pointer hover:bg-muted hover:border-foreground/20 active:scale-90 transition-all duration-150"
+        className="absolute -right-3 bottom-20 rounded-full border border-border bg-card p-1.5 cursor-pointer hover:bg-muted hover:border-foreground/20 active:scale-90 transition-all duration-150 hover-glow"
       >
         {isOpen ? (
           <ChevronLeft className="w-3.5 h-3.5" />

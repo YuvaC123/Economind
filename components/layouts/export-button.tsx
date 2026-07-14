@@ -31,7 +31,7 @@ export function ExportButton() {
   return (
     <Button variant="ghost" size="icon" title="Export data" onClick={handleExport}>
       {justExported ? (
-        <Check className="w-4 h-4 text-green-600" />
+        <Check className="w-4 h-4 text-green-400" />
       ) : (
         <Download className="w-4 h-4" />
       )}

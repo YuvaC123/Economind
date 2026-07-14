@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { motion } from 'framer-motion'
 import { Sidebar } from '@/components/layouts/sidebar'
 import { TopNav } from '@/components/layouts/top-nav'
 import { RightPanel } from '@/components/layouts/right-panel'
@@ -12,6 +14,7 @@ export default function DashboardLayout({
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [rightPanelOpen, setRightPanelOpen] = useState(true)
+  const pathname = usePathname()
 
   return (
     <div className="flex h-screen bg-background">
@@ -31,7 +34,14 @@ export default function DashboardLayout({
 
         {/* Main Area */}
         <main className="flex-1 overflow-y-auto pt-16 pb-6 px-6">
-          {children}
+          <motion.div
+            key={pathname}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+          >
+            {children}
+          </motion.div>
         </main>
       </div>
 
@@ -41,7 +51,7 @@ export default function DashboardLayout({
       {/* Right Panel Toggle Button */}
       <button
         onClick={() => setRightPanelOpen(!rightPanelOpen)}
-        className="fixed right-0 top-20 z-40 bg-white p-2 hover:bg-muted transition-colors border border-border rounded-l-lg"
+        className="fixed right-0 top-20 z-40 bg-card p-2 hover:bg-muted transition-colors border border-border rounded-l-lg hover-glow"
         title={rightPanelOpen ? 'Close insights' : 'Open insights'}
       >
         <svg

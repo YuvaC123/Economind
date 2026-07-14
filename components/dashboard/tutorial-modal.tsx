@@ -108,10 +108,10 @@ export function TutorialButton() {
             onClick={close}
           />
 
-          <div className="relative bg-white rounded-xl border border-border shadow-lg w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-card rounded-xl border border-border shadow-lg w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
             <button
               onClick={close}
-              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground cursor-pointer transition-colors"
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground cursor-pointer transition-colors hover-glow"
               aria-label="Close tutorial"
             >
               <X className="w-4 h-4" />
@@ -165,7 +165,7 @@ export function TutorialButton() {
                         <button
                           key={s.id}
                           onClick={() => setDemoScenario(s)}
-                          className={`px-2 py-2 rounded-lg border text-xs font-medium cursor-pointer transition-all duration-150 ${
+                          className={`px-2 py-2 rounded-lg border text-xs font-medium cursor-pointer transition-all duration-150 hover-glow ${
                             demoScenario.id === s.id
                               ? 'border-primary bg-primary/5 text-primary'
                               : 'border-border hover:bg-muted'
@@ -232,7 +232,7 @@ export function TutorialButton() {
                     key={i}
                     onClick={() => setStep(i)}
                     aria-label={`Go to step ${i + 1}`}
-                    className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-colors duration-150 ${
+                    className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-colors duration-150 hover-glow ${
                       i === step ? 'bg-primary' : 'bg-muted hover:bg-primary/40'
                     }`}
                   />

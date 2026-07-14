@@ -27,7 +27,7 @@ export function MacroeconomicCard({ macro, onChange, readOnly = false }: Macroec
               <div key={indicator.key} className="space-y-2">
                 <div className="flex items-center justify-between">
                   <label className="text-sm font-medium">{indicator.label}</label>
-                  <span className="text-sm font-semibold">
+                  <span className="text-sm font-mono font-semibold">
                     {typeof value === 'number' ? value.toFixed(1) : value}
                   </span>
                 </div>
@@ -65,18 +65,18 @@ export function MacroeconomicCard({ macro, onChange, readOnly = false }: Macroec
         </div>
 
         {/* Summary Stats */}
-        <div className="mt-6 pt-6 border-t border-border grid grid-cols-3 gap-3">
-          <div className="rounded-lg border border-border p-3 text-center">
+        <div className="mt-6 pt-6 border-t border-border grid grid-cols-3 divide-x divide-border">
+          <div className="text-center px-2 first:pl-0 last:pr-0">
             <p className="text-xs text-muted-foreground mb-1">Avg. Inflation</p>
-            <p className="text-lg font-semibold text-primary">{macro.inflation.toFixed(1)}%</p>
+            <p className="text-lg font-mono font-semibold text-primary">{macro.inflation.toFixed(1)}%</p>
           </div>
-          <div className="rounded-lg border border-border p-3 text-center">
+          <div className="text-center px-2 first:pl-0 last:pr-0">
             <p className="text-xs text-muted-foreground mb-1">GDP Growth</p>
-            <p className="text-lg font-semibold text-primary">{macro.gdpGrowth.toFixed(1)}%</p>
+            <p className="text-lg font-mono font-semibold text-primary">{macro.gdpGrowth.toFixed(1)}%</p>
           </div>
-          <div className="rounded-lg border border-border p-3 text-center">
+          <div className="text-center px-2 first:pl-0 last:pr-0">
             <p className="text-xs text-muted-foreground mb-1">Confidence</p>
-            <p className="text-lg font-semibold text-primary">{macro.marketConfidence.toFixed(0)}</p>
+            <p className="text-lg font-mono font-semibold text-primary">{macro.marketConfidence.toFixed(0)}</p>
           </div>
         </div>
       </CardContent>

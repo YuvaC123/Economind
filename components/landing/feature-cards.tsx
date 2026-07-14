@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { BarChart3, Zap, Brain, TrendingUp } from 'lucide-react'
 
 const features = [
@@ -29,20 +30,33 @@ export function FeatureCards() {
   return (
     <section id="features" className="py-20 px-6 scroll-mt-16">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: '-80px' }}
+          transition={{ duration: 0.4 }}
+        >
           <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">Features</p>
-          <h2 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight">
+          <h2 className="font-heading text-3xl md:text-4xl font-medium mb-3 tracking-tight">
             Built for research
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Everything you need to understand consumer economic behavior and validate economic
             theories
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {features.map((feature, i) => (
-            <div key={i} className="card-glass">
+            <motion.div
+              key={i}
+              className="card-glass"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: '-60px' }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+            >
               <div className="flex items-start gap-4">
                 <div className="mt-0.5 p-2 rounded-lg bg-primary/10">
                   <feature.icon className="w-5 h-5 text-primary" />
@@ -52,7 +66,7 @@ export function FeatureCards() {
                   <p className="text-muted-foreground text-sm">{feature.description}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

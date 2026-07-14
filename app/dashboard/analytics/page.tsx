@@ -5,6 +5,7 @@ import { StatCard } from '@/components/shared/stat-card'
 import { MiniBarChart } from '@/components/charts/mini-bar-chart'
 import { MiniLineChart } from '@/components/charts/mini-line-chart'
 import { MiniDonutChart } from '@/components/charts/mini-donut-chart'
+import { PageTransition } from '@/components/shared/page-transition'
 
 const SPENDING_DISTRIBUTION = [
   { label: 'Housing', value: 32 },
@@ -31,7 +32,7 @@ const INVESTMENT_ALLOCATION = [
 ]
 
 const CONSUMER_COMPARISON = [
-  { label: 'Sarah C.', value: 3240 },
+  { label: 'John D.', value: 3240 },
   { label: 'John S.', value: 4180 },
   { label: 'Emma W.', value: 2650 },
 ]
@@ -54,9 +55,10 @@ const CONFIDENCE_SCORES = [
 
 export default function AnalyticsPage() {
   return (
+    <PageTransition>
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold mb-1">Analytics Dashboard</h2>
+        <h2 className="font-heading text-3xl font-medium mb-1">Analytics Dashboard</h2>
         <p className="text-muted-foreground">
           Comprehensive analysis of consumer behavior patterns and trends
         </p>
@@ -127,5 +129,6 @@ export default function AnalyticsPage() {
         </div>
       </div>
     </div>
+    </PageTransition>
   )
 }

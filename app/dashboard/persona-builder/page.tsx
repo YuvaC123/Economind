@@ -1,18 +1,20 @@
 'use client'
 
 import { useState } from 'react'
+import { Reorder } from 'framer-motion'
 import { BehavioralTraits } from '@/components/dashboard/behavioral-traits'
 import { EditPersonaModal } from '@/components/dashboard/edit-persona-modal'
+import { PageTransition } from '@/components/shared/page-transition'
 import { Button } from '@/components/ui/button'
-import { Plus, Edit2, Trash2 } from 'lucide-react'
+import { Plus, Edit2, Trash2, GripVertical } from 'lucide-react'
 import { Persona } from '@/lib/mock-data'
 
 const INITIAL_PERSONAS: Persona[] = [
   {
     id: 'persona-2',
-    name: 'Sarah Chen',
+    name: 'John Doe',
     age: 35,
-    gender: 'female',
+    gender: 'male',
     education: 'masters',
     income: 85000,
     wealth: 250000,
@@ -94,33 +96,41 @@ export default function PersonaBuilderPage() {
   }
 
   return (
+    <PageTransition>
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold mb-1">Persona Builder</h2>
+        <h2 className="font-heading text-3xl font-medium mb-1">Persona Builder</h2>
         <p className="text-muted-foreground">Create and manage consumer personas for simulations</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Personas List */}
         <div className="lg:col-span-2">
-          <div className="flex gap-2 mb-4">
+          <div className="flex items-center justify-between gap-2 mb-4">
             <Button className="gap-2" onClick={handleNewPersona}>
               <Plus className="w-4 h-4" />
               New Persona
             </Button>
+            <p className="text-xs text-muted-foreground hidden sm:block">Drag to reorder</p>
           </div>
 
-          <div className="grid gap-4">
+          <Reorder.Group axis="y" values={personas} onReorder={setPersonas} className="grid gap-4">
             {personas.map((persona) => (
-              <div key={persona.id} className="card-glass">
+              <Reorder.Item
+                key={persona.id}
+                value={persona}
+                className="card-interactive cursor-grab active:cursor-grabbing"
+                whileDrag={{ scale: 1.02, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', zIndex: 10 }}
+              >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
+                    <GripVertical className="w-4 h-4 text-muted-foreground/50 flex-shrink-0" />
                     <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm">
                       {persona.name.charAt(0)}
                     </div>
                     <div>
                       <h3 className="font-medium">{persona.name}</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground font-mono">
                         Age: {persona.age} &bull; Income: ${(persona.income / 1000).toFixed(0)}K
                       </p>
                     </div>
@@ -144,9 +154,9 @@ export default function PersonaBuilderPage() {
                     </Button>
                   </div>
                 </div>
-              </div>
+              </Reorder.Item>
             ))}
-          </div>
+          </Reorder.Group>
         </div>
 
         {/* Behavioral Traits Sidebar */}
@@ -161,5 +171,6 @@ export default function PersonaBuilderPage() {
         onSave={handleSave}
       />
     </div>
+    </PageTransition>
   )
 }

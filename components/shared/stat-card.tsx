@@ -24,7 +24,7 @@ export function StatCard({
         {change && (
           <span
             className={`text-xs font-medium ${
-              changePositive ? 'text-green-600' : 'text-red-600'
+              changePositive ? 'text-green-400' : 'text-red-400'
             }`}
           >
             {change}
@@ -32,7 +32,7 @@ export function StatCard({
         )}
       </div>
       <p className="text-sm text-muted-foreground mb-1">{label}</p>
-      <p className="text-2xl font-semibold">{value}</p>
+      <p className="text-2xl font-mono font-semibold">{value}</p>
     </div>
   )
 }

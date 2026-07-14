@@ -7,16 +7,16 @@ const columns = [
   {
     title: 'Resources',
     links: [
-      { label: 'Documentation', href: '#' },
+      { label: 'Documentation', href: '/documentation' },
       { label: 'Research Reports', href: '/dashboard/reports' },
-      { label: 'Methodology', href: '#' },
+      { label: 'Methodology', href: '/methodology' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { label: 'Contact', href: '#' },
-      { label: 'Privacy', href: '#' },
+      { label: 'Contact', href: '/contact' },
+      { label: 'Privacy', href: '/privacy' },
     ],
   },
 ]
@@ -27,7 +27,7 @@ export function SiteFooter() {
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-10">
           <div className="sm:col-span-2">
-            <div className="flex items-center gap-2 font-semibold text-sm mb-2">
+            <div className="flex items-center gap-2 font-heading font-medium text-base mb-2">
               <Brain className="w-5 h-5 text-primary" />
               EconoMind
             </div>

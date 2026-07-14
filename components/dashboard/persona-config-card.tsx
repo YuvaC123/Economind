@@ -33,7 +33,7 @@ export function PersonaConfigCard({ persona, onEdit }: PersonaConfigCardProps) {
           </div>
           <button
             onClick={onEdit}
-            className="text-xs px-3 py-1.5 rounded-lg border border-border cursor-pointer hover:bg-primary/10 hover:border-primary/30 hover:text-primary active:scale-95 transition-all duration-150"
+            className="text-xs px-3 py-1.5 rounded-lg border border-border cursor-pointer hover:bg-primary/10 hover:border-primary/30 hover:text-primary active:scale-95 transition-all duration-150 hover-glow"
           >
             Edit
           </button>
@@ -43,17 +43,15 @@ export function PersonaConfigCard({ persona, onEdit }: PersonaConfigCardProps) {
       <CardContent className="space-y-6">
         {/* Demographics */}
         <div>
-          <h4 className="text-sm font-semibold mb-3 text-muted-foreground">Demographics</h4>
-          <div className="grid grid-cols-2 gap-3">
+          <h4 className="text-sm font-semibold mb-1 text-muted-foreground">Demographics</h4>
+          <div className="divide-y divide-border">
             {stats.map((stat, i) => {
               const Icon = stat.icon
               return (
-                <div key={i} className="rounded-lg border border-border p-3 flex items-center gap-3">
+                <div key={i} className="flex items-center gap-3 py-2.5">
                   <Icon className="w-4 h-4 text-primary flex-shrink-0" />
-                  <div className="min-w-0">
-                    <p className="text-xs text-muted-foreground">{stat.label}</p>
-                    <p className="text-sm font-semibold">{stat.value}</p>
-                  </div>
+                  <p className="text-sm text-muted-foreground flex-1">{stat.label}</p>
+                  <p className="text-sm font-mono font-semibold">{stat.value}</p>
                 </div>
               )
             })}
@@ -72,14 +70,17 @@ export function PersonaConfigCard({ persona, onEdit }: PersonaConfigCardProps) {
         </div>
 
         {/* Financial Overview */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-lg border border-border p-3">
-            <p className="text-xs text-muted-foreground mb-1">Monthly Expenses</p>
-            <p className="text-lg font-semibold">${(persona.monthlyExpenses / 1000).toFixed(1)}K</p>
-          </div>
-          <div className="rounded-lg border border-border p-3">
-            <p className="text-xs text-muted-foreground mb-1">Current Debt</p>
-            <p className="text-lg font-semibold">${(persona.debt / 1000).toFixed(1)}K</p>
+        <div>
+          <h4 className="text-sm font-semibold mb-1 text-muted-foreground">Financial Overview</h4>
+          <div className="divide-y divide-border">
+            <div className="flex items-center justify-between py-2.5">
+              <p className="text-sm text-muted-foreground">Monthly Expenses</p>
+              <p className="text-sm font-mono font-semibold">${(persona.monthlyExpenses / 1000).toFixed(1)}K</p>
+            </div>
+            <div className="flex items-center justify-between py-2.5">
+              <p className="text-sm text-muted-foreground">Current Debt</p>
+              <p className="text-sm font-mono font-semibold">${(persona.debt / 1000).toFixed(1)}K</p>
+            </div>
           </div>
         </div>
       </CardContent>

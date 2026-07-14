@@ -10,11 +10,11 @@ import { SettingsMenu } from '@/components/layouts/settings-menu'
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-white">
+    <header className="sticky top-0 z-40 border-b border-border bg-card">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="flex items-center gap-2 font-semibold text-sm cursor-pointer hover:text-primary transition-colors duration-150"
+          className="flex items-center gap-2 font-heading font-medium text-base cursor-pointer hover:text-primary transition-colors duration-150"
         >
           <Brain className="w-5 h-5 text-primary" />
           EconoMind
